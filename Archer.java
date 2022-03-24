@@ -1,7 +1,7 @@
 /**
  * Interface
  */
-public abstract class Archer {
+public interface Archer {
      static final String ARCHER_MENU = "1. Arrow\n2. Fire Arrow";
      static final int NUM_ARCHER_MENU_ITEMS = 2;
 
