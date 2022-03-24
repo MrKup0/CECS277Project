@@ -39,7 +39,8 @@ public abstract class Entity {
 
      /**
       * Deals damage to the entity. If the damage is greater than
-      * the entities curren
+      * the entities current hp, the HP is set to zero
+      * @param d the integer damage to be taken
       */
      public void takeDamage(int d) {
           if (d > hp) {
@@ -49,6 +50,10 @@ public abstract class Entity {
           }
      }
 
+     /**
+      * Overrides the toString() function to allow for easier calls
+      * @return name: hp/maxHp
+      */
      @override
      public String toString() {
           return name + ": " + hp + "/" + maxHp;
