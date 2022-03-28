@@ -8,7 +8,7 @@ public abstract class Entity {
       * @param n name of the entity
       * @param mHp max HP of the entity
       */
-     Public Entity(String n, int mHp) {
+     public Entity(String n, int mHp) {
           name = n;
           maxHp = mHp;
           hp = mHp;
