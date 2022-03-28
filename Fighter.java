@@ -11,7 +11,7 @@ public interface Fighter {
       * @return the string description of the sword attack
       */
      public String sword(entity e) {
-         int dmg = = (int) (Math.random() * 5) + 1;
+         int dmg = (int) (Math.random() * 5) + 1;
          e.takeDamage(dmg);
          return this.getName() + " slashes " + e.getName()
          + " with a sword for " + dmg + " damage.";
