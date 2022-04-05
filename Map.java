@@ -1,6 +1,9 @@
 /**
  * Singelton, points are in (y, x) since 2D arrays flip co-ords around
  */
+import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class Map () {
@@ -26,14 +29,14 @@ public class Map () {
                map = new char [5] [5];
                // update map[][] //
                for (int i = 0; i < 5; i++) {
-                    string line = read.nextLine();
+                    String line = read.nextLine();
                     for (int j = 0; j < 5; j++) {
-                         map[i][j] = line[0];
+                         map[i][j] = line.charAt(0);
                          line = line.substring(2);
                     }
                }
                // populate revealed[][] //
-               revealed = new boolean [5] [5];
+               revealed = new boolean [5][5];
                for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
                          revealed[i][j] = false;
@@ -45,14 +48,15 @@ public class Map () {
      }
 
      public char getCharAtLoc(Point p) {
-          return map[p.getY()][p.getX()];
+          return map(int(p.getY()),int(p.getX()));
      }
 
      public Point findStart() {
           for (int i = 0; i < 5; i++) {
                for (int j = 0; j < 5; j++) {
                     if (map[i][j] == 's') {
-                         return new Point(j)(i);
+                         Point p = new Point(j,i);
+                         return p;
                     }
                }
           }

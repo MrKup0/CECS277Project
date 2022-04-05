@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Hero extends Entity implements Fighter, Archer, Magical {
   private Point loc;
   private int level;

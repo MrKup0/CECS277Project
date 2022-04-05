@@ -1,7 +1,9 @@
+import org.w3c.dom.Entity;
+
 /**
  * Interface
  */
-public interface Fighter {
+public interface Fighter{
      static final String FIGHTER_MENU = "1. Sword\n2. Axe";
      static final int NUM_FIGHTER_MENU_ITEMS = 2;
 
@@ -10,7 +12,7 @@ public interface Fighter {
       * @param e the entity being attacked with a sword
       * @return the string description of the sword attack
       */
-     public String sword(entity e) {
+     public String Sword(Entity e) {
          int dmg = (int) (Math.random() * 5) + 1;
          e.takeDamage(dmg);
          return this.getName() + " slashes " + e.getName()
@@ -22,7 +24,7 @@ public interface Fighter {
       * @param e the entity being attacked with an axe
       * @return the string description of the axe attack
       */
-     public String axe(entity e) {
+     public String Axe(Entity e) {
           int dmg = (int) (Math.random() * 5) + 1;
           e.takeDamage(dmg);
           return this.getName() + " slashes " + e.getName() +

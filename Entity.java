@@ -54,7 +54,7 @@ public abstract class Entity {
       * Overrides the toString() function to allow for easier calls
       * @return name: hp/maxHp
       */
-     @override
+     @Override
      public String toString() {
           return name + ": " + hp + "/" + maxHp;
      }
