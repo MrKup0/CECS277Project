@@ -8,6 +8,21 @@ public class Warrior extends Enemy implements Fighter {
     public Warrior(String n, int mHp) {
         super(n, mHp);
     }
+
+    /**
+     * Randomly chooses an attack from the Fighter interface
+     * @param the hero object taking damage
+     * @return the string description of the attack
+     */
+    public String attack(Hero h) {
+         int attackChoice = (int) (Math.random() * 2);
+         switch (attackChoice) {
+              case 0:
+                    return Sword(h);
+              case 1:
+                    return Axe(h);
+         }
+    }
 }
 
 /*
@@ -16,6 +31,21 @@ public class Warrior extends Enemy implements Fighter {
     public Warrior(String n, int mHp) {
         super(n, mHp);
     }
+
+   /**
+    * Randomly chooses an attack from the Fighter interface
+    * @param the hero object taking damage
+    * @return the string description of the attack
+    *//*
+   public String attack(Hero h) {
+        int attackChoice = (int) (Math.random() * 2);
+        switch (attackChoice) {
+             case 0:
+                   return Sword(h);
+             case 1:
+                   return Axe(h);
+        }
+   }
 
     /**
      * Sword attack method
