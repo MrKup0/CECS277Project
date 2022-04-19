@@ -11,10 +11,17 @@ public class Map () {
      private boolean [][] revealed;
      private static Map instance = null;
 
+     /**
+      * Constructor which loads the map default starting map
+      */
      public Map() {
           loadMap(1);
      }
 
+     /**
+      * Gets the current instance of the Singelton map
+      * @return the current Map instance
+      */
      public static Map getInstance() {
           if (instance == null) {
                instance = new Map();
@@ -22,6 +29,10 @@ public class Map () {
           return instance;
      }
 
+     /**
+      * Loads the map from a plain text file and populates the revealed array
+      * with all false
+      */
      public void loadMap(int mapNum) { // ugly loading, will probably need fixing
           String mapName = "map" + mapNum + ".txt";
           try {
@@ -47,14 +58,23 @@ public class Map () {
           }
      }
 
+     /**
+      * Gets the character stored in position p
+      * @param the point containing x and y cordinates
+      * @return the character at the position specified by the point object
+      */
      public char getCharAtLoc(Point p) {
           return map(int(p.getY()),int(p.getX()));
      }
 
+     /**
+      * Locates the 's' on the map and returns the cordinates to it
+      * @return the position of the 's' as a point object
+      */
      public Point findStart() {
           for (int i = 0; i < 5; i++) {
                for (int j = 0; j < 5; j++) {
-                    if (map[i][j] == 's') {
+                    if (map[i][j].equals('s')) {
                          Point p = new Point(j,i);
                          return p;
                     }
@@ -62,16 +82,29 @@ public class Map () {
           }
      }
 
+     /**
+      * Marks the specified position as revealed
+      * @param the point containing the position to be revealed
+      */
      public void reveal(Point p) {
           revealed[p.getY()][p.getX()] = true;
           removeCharAtLoc(p);
      }
 
+     /**
+      * Marks the character at a given position with '*'; indicating that the point has been visited
+      * @param the point object containing the x and y cordinates to be marked
+      */
      public void removeCharAtLoc(Point p) {
           map[p.getY()][p.getX()] = '*';
      }
 
+     /**
+      * Custom string function which displays the map point as a String
+      * @param a point object containing the cordinates to be parsed
+      * @return the string stored at the cordinates specified
+      */
      public String mapToString(Point p) {
           return toString(map[p.getY()][p.getX()]);
      }
-}        1 file(s) copied.
+}
