@@ -7,6 +7,11 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
   private int keys;
   private int potions;
 
+  /**
+   * Constructor requiring a name and maxHP value
+   * @param n the name of the object
+   * @param maxHp the integer maximum hp for the object
+   */
   public Hero(String n, int maxHp){
     super(n, maxHp);
     level = 1;
@@ -14,36 +19,64 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
 
   }
 
+  /**
+   * Overriden toString() function
+   * @return the name, then the current hp out of the maximum hp
+   */
   @Override
   public String toString() {
     return this.getName() + ": " + this.gethp() + " /25";
     }
 
+  /**
+   * Increases the current level of the object
+   */
   public void levelUp(){
     level++;
-    //go to next map
   }
 
+  /**
+   * Gets the current level of the hero
+   */
   public int getLevel() {
       return level;
   }
 
-  // All go() methods are temporary until Map is implemented //
+  // All go() methods need revision based on (x, y) cords //
+  /**
+   * Moves the object up one in the map
+   * @return the character stored at the location the object is moving
+   */
   public char goNorth() {
     Map table = Map.getInstance(); // this will likely be the cause of any errors
     loc.translate(0, 1);
     return table.getCharAtLoc(loc);
   }
+
+  /**
+   * Moves the object down one in the map
+   * @return the character stored at the location the object is moving
+   */
   public char goSouth {
     Map table = Map.getInstance();
     loc.translate(0, -1);
     return table.getCharAtLoc(loc);
   }
+
+  /**
+   * Moves the object right one in the map
+   * @return the character stored at the location the object is moving
+   */
   public char goEast {
     Map table = Map.getInstance();
     loc.translate(1, 0);
     return table.getCharAtLoc(loc);
   }
+
+  /**
+   * Moves the object left one in the map
+   * @return the character stored at the location the object is moving
+   */
   public char goWest() {
     Map table = Map.getInstance();
     loc.translate(-1, 1);
@@ -51,14 +84,27 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
   }
   // END temporary go() block //
 
+  /**
+   * Displays the main attack options the object can take
+   * @return the string of options the object has
+   */
   public String getAttackMenu() {
       return "1. Physical Attck\n2/. Magical Attack\n3. Ranged Attack";
   }
 
+  /**
+   * Gets the number of avaliable main attack options
+   * @param the integer representing the number of choices for main attacks
+   */
   public int getNumAttackMenuItems() {
       return 3;
   }
 
+  /**
+   * Gets the sub attacks based on the pased in main attack choice
+   * @param the integer choice for main attack between 1 and getNumAttackMenuItems()
+   * @return the menu for the coresponding main attack choice
+   */
   public String getSubAttackMenu(int choice) {
       switch (choice) {
         case 1:
@@ -72,6 +118,10 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
       }
   }
 
+  /**
+   * Gets the number of avaliable options for each sub attack based on the passed main attack choice
+   * @param the number of possible options for the chose sub attack
+   */
   public int getNumSubAttackMenuItems(int choice) {
       switch (choice) {
       case 1:
@@ -85,6 +135,13 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
       }
     }
 
+  /**
+   * Deals damage to a passed enemy using the selected main attack and sub attack
+   * @param e the enemy object
+   * @param choice the main attack choice
+   * @param subchoice the sub attack choice
+   * @return the string output of the specific attack
+   */
   public String attack(Enemy e, int choice, int subchoice) {
       switch (choice) {
           case 1:
@@ -167,7 +224,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
 
   public boolean usePotion(){
     if(hasPotion()){
-      //set hp to hp + 10;
+      hp += 10;
       return true;
     }
     return false;
