@@ -12,22 +12,12 @@ public interface Fighter{
       * @param e the entity being attacked with a sword
       * @return the string description of the sword attack
       */
-     public String Sword(Entity e) {
-         int dmg = (int) (Math.random() * 5) + 1;
-         e.takeDamage(dmg);
-         return this.getName() + " slashes " + e.getName()
-         + " with a sword for " + dmg + " damage.";
-     }
+     public String Sword(Entity e);
 
      /**
       * Axe attack method
       * @param e the entity being attacked with an axe
       * @return the string description of the axe attack
       */
-     public String Axe(Entity e) {
-          int dmg = (int) (Math.random() * 5) + 1;
-          e.takeDamage(dmg);
-          return this.getName() + " slashes " + e.getName() +
-          " with an axe for " + dmg + " damage";
-     }
+     public String Axe(Entity e);
 }
