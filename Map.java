@@ -98,7 +98,7 @@ public class Map{
       * @param the point object containing the x and y cordinates to be marked
       */
      public void removeCharAtLoc(Point p) {
-          map[(int)p.getY()][(int)p.getX()] = '*';
+          map[(int)p.getY()][(int)p.getX()] = 'n';
      }
 
      /**

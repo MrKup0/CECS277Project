@@ -32,7 +32,8 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   @Override
   public String toString() {
-    return name + ": " + hp + " /25";
+    return name + ": " + hp + " /25\nLevel: " + level + " Gold: " + gold
+    + "\nP: " + potions + " K: " + keys + "\n";
     }
 
   /**
@@ -40,9 +41,11 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public void levelUp(){
     level++;
-    Map m = Map.getInstance();
-    m.loadMap(level);
-    loc = m.findStart();
+    if (level != 4) {
+        Map m = Map.getInstance();
+        m.loadMap(level);
+        loc = m.findStart();
+    }
   }
 
   /**

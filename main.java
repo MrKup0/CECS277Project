@@ -1,21 +1,23 @@
 public class main {
     public static void main() {
         Map m = new Map();
-        boolean victory = false;
+        EnemyGenerator gen = new EnemyGenerator();
+        Enemy cachedMonster = gen.generateEnemy(1); // ensures that the player can recallenge a monster
+        boolean alive = true; // tracks if the hero is alive. used for monsterRoom(),  see L46
 
         System.out.println("Welcome hero! what is your name");
         Hero h = new Hero(CheckInput.getString(), 25);
 
-        while(h.gethp() > 0 && !victory) {
+        while(alive && h.getLevel() < 4) {
              int selection = mainMenu(h);
-             char moved = ' ';
+             char moved = ' '; // moved stores the space the hero moved too
              do {
-                  switch (selection) {
+                  switch (selection) { // choose which direction
                       case 1: moved = h.goNorth(); break;
                       case 2: moved = h.goEast(); break;
                       case 3: moved = h.goSouth(); break;
                       case 4: moved = h.goWest(); break;
-                      default: moved = 'T'; break;
+                      case 5: moved = 'T'; break; // breaks the loop
                   }
                   if (moved == 'L') {
                       System.out.println("Cannot move that direction! Select again");
@@ -23,8 +25,8 @@ public class main {
                   }
              } while (moved == 'L');
 
-             switch (moved) {
-                  case 'f':
+             switch (moved) { // got a valid tile, perform the correct opp
+                  case 'f': // the end of the level
                          if (!h.hasKey()) {
                               System.out.println("You do not have a key! Return when you have found one!");
                          } else {
@@ -34,16 +36,24 @@ public class main {
                                    h.levelUp();
                               }
                          } break;
-                  case 's':
+                  case 's': // store
                          store(h);
                          break;
-                  case 'm':
-                         monsterRoom(h, /*?*/);
+                  case 'm': // encounter
+                         if (cachedMonster.gethp() == 0) {
+                              cachedMonster = gen.generateEnemy(h.getLevel());
+                         }
+                         alive = monsterRoom(h, cachedMonster);
                          break;
-                  case 'i': // give item
+                  case 'i': // item
+                         int item = (int)(Math.random() * 2);
+                         if (item) { // item == 1
+                              h.pickUpKey();
+                         } else {
+                              h.pickUpPotion();
+                         }
                          break;
              }
-
         }
     }
 
@@ -54,9 +64,6 @@ public class main {
      */
     public static int mainMenu(Hero h) {
         System.out.println(h); // check Entity if error
-        System.out.println("Level: " + h.getLevel());
-        System.out.println("Gold: " + h.getGold());
-        System.out.println("P: " + h.hasPotion() + "K: " + h.hasKey());
         System.out.println(m.mapToString(h.getLocation()));
         System.out.println("1. Go North\n2. Go South\n3. Go East\n4. Go West\n5. Quit");
 
@@ -118,7 +125,7 @@ public class main {
     }
 
     /**
-     * A singular turn in comabt where the user selects how they would like to attack
+     * A singular turn in combat where the user selects how they would like to attack
      * and then are attacked by the enemy, if the enemy is still alive
      * @param h a hero object
      * @param e an enemy object
