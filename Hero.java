@@ -1,7 +1,11 @@
+import org.w3c.dom.Entity;
+
 import java.awt.*;
 
 public class Hero extends Entity implements Fighter, Archer, Magical {
   private Point loc;
+  private String name;
+  private int hp;
   private int level;
   private int gold;
   private int keys;
@@ -13,7 +17,8 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * @param maxHp the integer maximum hp for the object
    */
   public Hero(String n, int maxHp){
-    super(n, maxHp);
+    this.name = n;
+    this.hp = maxHp;
     level = 1;
     gold = 25;
 
@@ -25,7 +30,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   @Override
   public String toString() {
-    return this.getName() + ": " + this.gethp() + " /25";
+    return name + ": " + hp + " /25";
     }
 
   /**
@@ -57,7 +62,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * Moves the object down one in the map
    * @return the character stored at the location the object is moving
    */
-  public char goSouth {
+  public char goSouth{
     Map table = Map.getInstance();
     loc.translate(0, -1);
     return table.getCharAtLoc(loc);
@@ -67,7 +72,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * Moves the object right one in the map
    * @return the character stored at the location the object is moving
    */
-  public char goEast {
+  public char goEast{
     Map table = Map.getInstance();
     loc.translate(1, 0);
     return table.getCharAtLoc(loc);
@@ -120,7 +125,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
 
   /**
    * Gets the number of avaliable options for each sub attack based on the passed main attack choice
-   * @param the number of possible options for the chose sub attack
+   * @param choice the number of possible options for the chose sub attack
    */
   public int getNumSubAttackMenuItems(int choice) {
       switch (choice) {
@@ -146,16 +151,16 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
       switch (choice) {
           case 1:
               if (subchoice == 1) {
-                  return sword(e);
+                  return Sword(e);
               }
               if (subchoice == 2) {
-                  return axe(e);
+                  return Axe(e);
               }
               return "You missed!";
 
           case 2:
               if (subchoice == 1) {
-                  return magicMissle(e);
+                  return magicMissile(e);
               }
               if (subchoice == 2) {
                   return fireball(e);
@@ -224,9 +229,43 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
 
   public boolean usePotion(){
     if(hasPotion()){
-      hp += 10;
+      this.hp += 10;
       return true;
     }
     return false;
   }
+    public String arrow(Enemy e) {
+        int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
+        e.takeDamage(dmg);
+        return name + " shoots at " + e.getName()
+                + " with an arrow for " + dmg + " points of damage.";
+    }
+
+    public String fireArrow(Enemy e) {
+        int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
+        e.takeDamage(dmg);
+        return name + " lobs a fire arrow at " + e.getName() +
+                " for " + dmg + " points of damage";
+    }
+
+    public String Sword(Enemy e) {
+        int dmg = (int) (Math.random() * 5) + 1;
+        e.takeDamage(dmg);
+        return name + " slashes " + e.getName()
+                + " with a sword for " + dmg + " damage.";
+    }
+
+    public String Axe(Enemy e) {
+        int dmg = (int) (Math.random() * 5) + 1;
+        e.takeDamage(dmg);
+        return name + " slashes " + e.getName() +
+                " with an axe for " + dmg + " damage";
+    }
+
+    public String magicMissile(Enemy e) {
+        int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
+        e.takeDamage(dmg);
+        return name + "casts Magic Missle on " + e.getName()
+                + " dealing " + dmg + " points of force damage.";
+    }
 }
