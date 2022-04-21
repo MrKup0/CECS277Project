@@ -21,6 +21,8 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
     this.hp = maxHp;
     level = 1;
     gold = 25;
+    Map m = Map.getInstance();
+    loc = m.findStart();
 
   }
 
@@ -38,6 +40,9 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public void levelUp(){
     level++;
+    Map m = Map.getInstance();
+    m.loadMap(level);
+    loc = m.findStart();
   }
 
   /**
@@ -53,9 +58,14 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * @return the character stored at the location the object is moving
    */
   public char goNorth() {
-    Map table = Map.getInstance(); // this will likely be the cause of any errors
+    Map table = Map.getInstance();
+    if (loc.getX() == 0) { // top row
+         return 'L';
+    }
     loc.translate(0, 1);
-    return table.getCharAtLoc(loc);
+    char coolBit = table.getCharAtLoc(loc);
+    table.reveal(loc);
+    return coolBit;
   }
 
   /**
@@ -64,8 +74,13 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public char goSouth{
     Map table = Map.getInstance();
+    if (loc.getX() == 4) {
+         return 'L';
+    }
     loc.translate(0, -1);
-    return table.getCharAtLoc(loc);
+    char coolBit = table.getCharAtLoc(loc);
+    table.reveal(loc);
+    return coolBit;
   }
 
   /**
@@ -74,8 +89,13 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public char goEast{
     Map table = Map.getInstance();
-    loc.translate(1, 0);
-    return table.getCharAtLoc(loc);
+    if (loc.getY() == 4) {
+         return 'L';
+    }
+    loc.translate(0, 1);
+    char coolBit = table.getCharAtLoc(loc);
+    table.reveal(loc);
+    return coolBit;
   }
 
   /**
@@ -84,8 +104,13 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public char goWest() {
     Map table = Map.getInstance();
-    loc.translate(-1, 1);
-    return table.getCharAtLoc(loc);
+    if (loc.getY() == 0) {
+         return 'L';
+    }
+    loc.translate(-1, 0);
+    char coolBit = table.getCharAtLoc(loc);
+    table.reveal(loc);
+    return coolBit;
   }
   // END temporary go() block //
 
@@ -191,13 +216,17 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
 
   boolean spendGold(int g){
     if (g <= gold){
-      //gold -= g; could also call collectGold(-g);
+      gold -= g;
       return true;
     }
     return false;
   }
 
-  boolean hasKey(){
+  public Point getLocation() {
+       return loc;
+ }
+
+  public boolean hasKey(){
     if (keys >= 1){
       return true;
     }

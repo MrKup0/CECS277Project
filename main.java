@@ -1,10 +1,48 @@
 public class main {
     public static void main() {
         Map m = new Map();
-        Hero h = new Hero("test", 25);
         boolean victory = false;
 
+        System.out.println("Welcome hero! what is your name");
+        Hero h = new Hero(CheckInput.getString(), 25);
+
         while(h.gethp() > 0 && !victory) {
+             int selection = mainMenu();
+             char moved = '';
+             do {
+                  switch (selection) {
+                      case 1: moved = h.goNorth(); break;
+                      case 2: moved = h.goEast(); break;
+                      case 3: moved = h.goSouth(); break;
+                      case 4: moved = h.goWest(); break;
+                      default: moved = 'T'; break;
+                  }
+                  if (moved == 'L') {
+                      System.out.println("Cannot move that direction! Select again");
+                      int selection = mainMenu();
+                  }
+             } while (moved == 'L');
+
+             switch (moved) {
+                  case 'f':
+                         if (!h.hasKey()) {
+                              System.out.println("You do not have a key! Return when you have found one!");
+                         } else {
+                              if (h.getLevel() == 3) {
+                                   victory = true;
+                              } else {
+                                   h.levelUp();
+                              }
+                         } break;
+                  case 's':
+                         store(h);
+                         break;
+                  case 'm':
+                         monsterRoom(h, /*?*/);
+                         break;
+                  case 'i': // give item
+                         break;
+             }
 
         }
     }
@@ -19,7 +57,7 @@ public class main {
         System.out.println("Level: " + h.getLevel());
         System.out.println("Gold: " + h.getGold());
         System.out.println("P: " + h.hasPotion() + "K: " + h.hasKey());
-        System.out.println(m);
+        System.out.println(mapToString(h.getLocation()));
         System.out.println("1. Go North\n2. Go South\n3. Go East\n4. Go West\n5. Quit");
 
         int res = CheckInput.getIntRange(1,5);
@@ -56,13 +94,16 @@ public class main {
                 }
                 break;
             case 2:
-                int dir = (int) (Math.random() * 4);
-                switch (dir) {
-                    case 0: h.goNorth(); break;
-                    case 1: h.goEast(); break;
-                    case 2: h.goSouth(); break;
-                    case 3: h.goWest(); break;
-                }
+                char moved = '';
+                do {
+                     int dir = (int) (Math.random() * 4);
+                     switch (dir) {
+                         case 0: moved = h.goNorth(); break;
+                         case 1: moved = h.goEast(); break;
+                         case 2: moved = h.goSouth(); break;
+                         case 3: moved = h.goWest(); break;
+                     }
+                } while (moved == 'L');
                 System.out.println("You ran away!");
                 return true;
                 break;
@@ -109,6 +150,33 @@ public class main {
      * @param a hero object
      */
     public static void store(Hero h) {
+         System.out.println("Welcome to the store! What would you like to buy?");
+         System.out.println("1. Health Potion - 25g\n2. Key - 50g\n3. Nothing, just browsing ...");
+         int res = CheckInput.getIntRange(1, 3);
 
+         switch (res) {
+         case 1:
+               if (h.getGold() < 25) {
+                    System.out.println("Sorry, you don't have enought gold for that!");
+               } else {
+                    h.spendGold(25);
+                    h.pickUpPotion();
+                    System.out.println("Pleasure doing busines with you!");
+               }
+               break;
+         case 2:
+               if (h.hasKey()) {
+                    System.out.println("Sorry, but you already got one of those.");
+               } else if (h.getGold() < 50) {
+                    System.out.println("Sorry, you don't have enought gold for that!");
+               } else {
+                    h.spendGold(50);
+                    h.pickUpKey();
+                    System.out.println("Pleasure doing busines with you!");
+               }
+               break;
+         case 3:
+               break;
+         }
     }
 }

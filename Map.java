@@ -64,7 +64,7 @@ public class Map () {
       * @return the character at the position specified by the point object
       */
      public char getCharAtLoc(Point p) {
-          return map(int(p.getY()),int(p.getX()));
+          return map[int(p.getX())][int(p.getY());
      }
 
      /**
@@ -75,7 +75,7 @@ public class Map () {
           for (int i = 0; i < 5; i++) {
                for (int j = 0; j < 5; j++) {
                     if (map[i][j].equals('s')) {
-                         Point p = new Point(j,i);
+                         Point p = new Point(i,j);
                          return p;
                     }
                }
@@ -87,7 +87,7 @@ public class Map () {
       * @param the point containing the position to be revealed
       */
      public void reveal(Point p) {
-          revealed[p.getY()][p.getX()] = true;
+          revealed[p.getX()][p.getY()] = true;
           removeCharAtLoc(p);
      }
 
@@ -105,6 +105,19 @@ public class Map () {
       * @return the string stored at the cordinates specified
       */
      public String mapToString(Point p) {
-          return toString(map[p.getY()][p.getX()]);
+          String stringMap = "";
+          for (int i = 0; i < 5; i++) {
+               for (int j = 0; j < 5; j++) {
+                    if (p.getX() == i && p.getY() == j) {
+                         stringMap += " * ";
+                    } else if (revealed[i][j]) {
+                         stringMap += " " + map[i][j] + " ";
+                    } else {
+                         stringMap += " x ";
+                    }
+               }
+               stringMap += "\n";
+          }
+          return stringMap;
      }
 }
