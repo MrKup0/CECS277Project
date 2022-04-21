@@ -72,7 +72,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * Moves the object down one in the map
    * @return the character stored at the location the object is moving
    */
-  public char goSouth{
+  public char goSouth(){
     Map table = Map.getInstance();
     if (loc.getX() == 4) {
          return 'L';
@@ -87,7 +87,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * Moves the object right one in the map
    * @return the character stored at the location the object is moving
    */
-  public char goEast{
+  public char goEast(){
     Map table = Map.getInstance();
     if (loc.getY() == 4) {
          return 'L';
