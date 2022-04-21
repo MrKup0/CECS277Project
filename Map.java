@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Map () {
+public class Map{
      private char [][] map;
      private boolean [][] revealed;
      private static Map instance = null;
@@ -64,7 +64,7 @@ public class Map () {
       * @return the character at the position specified by the point object
       */
      public char getCharAtLoc(Point p) {
-          return map[int(p.getX())][int(p.getY());
+          return map[(int)(p.getX())][(int)p.getY()];
      }
 
      /**
@@ -74,12 +74,14 @@ public class Map () {
      public Point findStart() {
           for (int i = 0; i < 5; i++) {
                for (int j = 0; j < 5; j++) {
-                    if (map[i][j].equals('s')) {
+                    if (map[i][j] == 's') {
                          Point p = new Point(i,j);
                          return p;
                     }
                }
           }
+          Point def = new Point();
+          return def;
      }
 
      /**
@@ -87,7 +89,7 @@ public class Map () {
       * @param the point containing the position to be revealed
       */
      public void reveal(Point p) {
-          revealed[p.getX()][p.getY()] = true;
+          revealed[(int)p.getX()][(int)p.getY()] = true;
           removeCharAtLoc(p);
      }
 
@@ -96,7 +98,7 @@ public class Map () {
       * @param the point object containing the x and y cordinates to be marked
       */
      public void removeCharAtLoc(Point p) {
-          map[p.getY()][p.getX()] = '*';
+          map[(int)p.getY()][(int)p.getX()] = '*';
      }
 
      /**

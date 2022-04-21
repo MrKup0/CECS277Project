@@ -24,7 +24,7 @@ public class Wizard extends Enemy implements Magical {
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String magicMissile(entity e) {
+     public String magicMissile(Entity e) {
           int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
           e.takeDamage(dmg);
           return this.getName() + "casts Magic Missle on " + e.getName()
@@ -36,7 +36,7 @@ public class Wizard extends Enemy implements Magical {
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String fireball(entity e) {
+     public String fireball(Entity e) {
           int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
           e.takeDamage(dmg);
           return this.getName() + " casts Fireball on " + e.getName()

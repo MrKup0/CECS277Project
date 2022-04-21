@@ -7,8 +7,8 @@ public class main {
         Hero h = new Hero(CheckInput.getString(), 25);
 
         while(h.gethp() > 0 && !victory) {
-             int selection = mainMenu();
-             char moved = '';
+             int selection = mainMenu(h);
+             char moved = ' ';
              do {
                   switch (selection) {
                       case 1: moved = h.goNorth(); break;
@@ -19,7 +19,7 @@ public class main {
                   }
                   if (moved == 'L') {
                       System.out.println("Cannot move that direction! Select again");
-                      int selection = mainMenu();
+                      selection = mainMenu(h);
                   }
              } while (moved == 'L');
 
@@ -57,7 +57,7 @@ public class main {
         System.out.println("Level: " + h.getLevel());
         System.out.println("Gold: " + h.getGold());
         System.out.println("P: " + h.hasPotion() + "K: " + h.hasKey());
-        System.out.println(mapToString(h.getLocation()));
+        System.out.println(m.mapToString(h.getLocation()));
         System.out.println("1. Go North\n2. Go South\n3. Go East\n4. Go West\n5. Quit");
 
         int res = CheckInput.getIntRange(1,5);
@@ -94,7 +94,7 @@ public class main {
                 }
                 break;
             case 2:
-                char moved = '';
+                char moved = ' ';
                 do {
                      int dir = (int) (Math.random() * 4);
                      switch (dir) {

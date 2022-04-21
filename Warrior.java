@@ -7,7 +7,7 @@ public class Warrior extends Enemy implements Fighter {
 
    /**
     * Randomly chooses an attack from the Fighter interface
-    * @param the hero object taking damage
+    * @param h the hero object taking damage
     * @return the string description of the attack
     */
    public String attack(Hero h) {

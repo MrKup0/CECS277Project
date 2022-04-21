@@ -10,12 +10,12 @@ public interface Archer {
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String arrow(entity e);
+     public String arrow(Entity e);
 
      /**
       * Fire arrow attack method
       * @param e the entity being shoot at with a fire arrow
       * @return the string description of the fire arrow attack
       */
-     public String fireArrow(entity e);
+     public String fireArrow(Entity e);
 }

@@ -10,12 +10,12 @@ public interface Magical {
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String magicMissile(entity e);
+     public String magicMissile(Entity e);
 
      /**
       * Iconic fireball attack method
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String fireball(entity e);
+     public String fireball(Entity e);
 }

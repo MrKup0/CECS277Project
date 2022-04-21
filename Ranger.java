@@ -25,7 +25,7 @@ public class Ranger extends Enemy implements Archer {
       * @param e the entity being attacked
       * @return a string description of the attack
       */
-     public String arrow(entity e) {
+     public String arrow(Entity e) {
         int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
         e.takeDamage(dmg);
         return this.getName() + " shoots at " + e.getName()
@@ -37,7 +37,7 @@ public class Ranger extends Enemy implements Archer {
       * @param e the entity being shoot at with a fire arrow
       * @return the string description of the fire arrow attack
       */
-     public String fireArrow(entity e) {
+     public String fireArrow(Entity e) {
         int dmg = (int) (Math.random() * 5) + 1; // Recomended damage, might tweak so hero does more dmg
         e.takeDamage(dmg);
         return this.getName() + " lobs a fire arrow at " + e.getName() +
