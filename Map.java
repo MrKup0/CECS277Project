@@ -90,7 +90,7 @@ public class Map{
       */
      public void reveal(Point p) {
           revealed[(int)p.getX()][(int)p.getY()] = true;
-          //removeCharAtLoc(p);
+          removeCharAtLoc(p);
      }
 
      /**

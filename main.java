@@ -1,12 +1,12 @@
 /**
  * A mini dungeon game consisting of 3 levels integrating various techniques
  * from class
- * 
+ *
  * By: Jacob Mitchell and Chris Murillo
  */
 public class main {
     public static void main(String[] args) {
-        // Set up 
+        // Set up
         Map m = new Map();
         EnemyGenerator gen = new EnemyGenerator();
         Enemy cachedMonster = gen.generateEnemy(1);

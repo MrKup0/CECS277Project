@@ -1,3 +1,5 @@
+import org.w3c.dom.Entity;
+
 import java.awt.*;
 
 /**
@@ -6,6 +8,8 @@ import java.awt.*;
 
 public class Hero extends Entity implements Fighter, Archer, Magical {
   private Point loc;
+  private String name;
+  private int hp;
   private int level;
   private int gold;
   private int keys;
@@ -17,7 +21,8 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    * @param maxHp the integer maximum hp for the object
    */
   public Hero(String n, int maxHp){
-    super(n, maxHp);
+    this.name = n;
+    this.hp = maxHp;
     level = 1;
     gold = 25;
     Map m = Map.getInstance();
@@ -31,7 +36,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   @Override
   public String toString() {
-    return this.getName() + ": " + this.getHp() + " /25\nLevel: " + level + " Gold: " + gold
+    return name + ": " + hp + " /25\nLevel: " + level + " Gold: " + gold
     + "\nP: " + potions + " K: " + keys + "\n";
     }
 
@@ -40,9 +45,11 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
    */
   public void levelUp(){
     level++;
-    Map m = Map.getInstance();
-    m.loadMap(level);
-    loc = m.findStart();
+    if (level != 4) {
+        Map m = Map.getInstance();
+        m.loadMap(level);
+        loc = m.findStart();
+    }
   }
 
   /**
@@ -61,7 +68,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
     if (loc.getX() == 0) { // top row
          return 'L';
     }
-    loc.translate(-1, 0);
+    loc.translate(0, 1);
     char coolBit = table.getCharAtLoc(loc);
     table.reveal(loc);
     return coolBit;
@@ -76,7 +83,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
     if (loc.getX() == 4) {
          return 'L';
     }
-    loc.translate(1, 0);
+    loc.translate(0, -1);
     char coolBit = table.getCharAtLoc(loc);
     table.reveal(loc);
     return coolBit;
@@ -106,7 +113,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
     if (loc.getY() == 0) {
          return 'L';
     }
-    loc.translate(0, -1);
+    loc.translate(-1, 0);
     char coolBit = table.getCharAtLoc(loc);
     table.reveal(loc);
     return coolBit;
@@ -175,10 +182,10 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
       switch (choice) {
           case 1:
               if (subchoice == 1) {
-                  return sword(e);
+                  return Sword(e);
               }
               if (subchoice == 2) {
-                  return axe(e);
+                  return Axe(e);
               }
               return "You missed!";
 
@@ -253,7 +260,7 @@ public class Hero extends Entity implements Fighter, Archer, Magical {
     return false;
   }
 
-  /** 
+  /**
    * Increments the number of keys the hero object has
    */
   public void pickUpKey(){
