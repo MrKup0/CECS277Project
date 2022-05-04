@@ -1,12 +1,12 @@
 /**
- * Singelton, points are in (y, x) since 2D arrays flip co-ords around
+ * Singelton map containing the map of the current level
  */
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class Map () {
+public class Map{
      private char [][] map;
      private boolean [][] revealed;
      private static Map instance = null;
@@ -33,7 +33,7 @@ public class Map () {
       * Loads the map from a plain text file and populates the revealed array
       * with all false
       */
-     public void loadMap(int mapNum) { // ugly loading, will probably need fixing
+     public void loadMap(int mapNum) {
           String mapName = "map" + mapNum + ".txt";
           try {
                Scanner read = new Scanner(new File(mapName));
@@ -41,9 +41,8 @@ public class Map () {
                // update map[][] //
                for (int i = 0; i < 5; i++) {
                     String line = read.nextLine();
-                    for (int j = 0; j < 5; j++) {
-                         map[i][j] = line.charAt(0);
-                         line = line.substring(2);
+                    for (int j = 0; j < 10; j+=2) {
+                         map[i][j/2] = line.charAt(j);
                     }
                }
                // populate revealed[][] //
@@ -60,11 +59,11 @@ public class Map () {
 
      /**
       * Gets the character stored in position p
-      * @param the point containing x and y cordinates
+      * @param p the point containing x and y cordinates
       * @return the character at the position specified by the point object
       */
      public char getCharAtLoc(Point p) {
-          return map(int(p.getY()),int(p.getX()));
+          return map[(int)(p.getX())][(int)p.getY()];
      }
 
      /**
@@ -74,37 +73,53 @@ public class Map () {
      public Point findStart() {
           for (int i = 0; i < 5; i++) {
                for (int j = 0; j < 5; j++) {
-                    if (map[i][j].equals('s')) {
-                         Point p = new Point(j,i);
+                    if (map[i][j] == 's') {
+                         Point p = new Point(i,j);
+                         revealed[i][j] = true;
                          return p;
                     }
                }
           }
+          Point def = new Point();
+          return def;
      }
 
      /**
       * Marks the specified position as revealed
-      * @param the point containing the position to be revealed
+      * @param p the point containing the position to be revealed
       */
      public void reveal(Point p) {
-          revealed[p.getY()][p.getX()] = true;
-          removeCharAtLoc(p);
+          revealed[(int)p.getX()][(int)p.getY()] = true;
+          //removeCharAtLoc(p);
      }
 
      /**
-      * Marks the character at a given position with '*'; indicating that the point has been visited
-      * @param the point object containing the x and y cordinates to be marked
+      * Marks the character at a given position with 'n'; indicating that the point has been visited
+      * @param p the point object containing the x and y cordinates to be marked
       */
      public void removeCharAtLoc(Point p) {
-          map[p.getY()][p.getX()] = '*';
+          map[(int)p.getX()][(int)p.getY()] = 'n';
      }
 
      /**
-      * Custom string function which displays the map point as a String
-      * @param a point object containing the cordinates to be parsed
-      * @return the string stored at the cordinates specified
+      * Custom string function which displays the map as a string
+      * @param p a point object indicating the players location
+      * @return the string representation of the map
       */
      public String mapToString(Point p) {
-          return toString(map[p.getY()][p.getX()]);
+          String stringMap = "";
+          for (int i = 0; i < 5; i++) {
+               for (int j = 0; j < 5; j++) {
+                    if (p.getX() == i && p.getY() == j) {
+                         stringMap += " * ";
+                    } else if (revealed[i][j]) {
+                         stringMap += " " + map[i][j] + " ";
+                    } else {
+                         stringMap += " x ";
+                    }
+               }
+               stringMap += "\n";
+          }
+          return stringMap;
      }
 }

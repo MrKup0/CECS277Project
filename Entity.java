@@ -1,3 +1,7 @@
+/**
+ * Main superclass for all enemies and players. Defines a being
+ * with hp, a name, and provides get functions
+ */
 public abstract class Entity {
      private String name;
      private int hp;

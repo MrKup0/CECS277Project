@@ -8,6 +8,3 @@ public abstract class Enemy extends Entity{
 
      public abstract String attack(Hero h);
 }
-
-
-
